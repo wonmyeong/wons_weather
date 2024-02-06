@@ -1,0 +1,88 @@
+@import "reset.css";
+
+#map {
+  height: 400px;
+  width: 400px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 1000vh;
+}
+
+.container h2 {
+  font-size: 40px;
+  font-weight: 600;
+  margin: 30px;
+}
+
+#map {
+  margin: 20px;
+}
+
+.weather div {
+  margin: 10px;
+}
+
+#weather_info {
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.weather {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+img {
+  width: 40px;
+  height: 40px;
+}
+
+@keyframes rotateSun {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+header {
+  display: flex;
+  align-items: center;
+}
+
+header img {
+  animation: rotateSun 10s ease-in-out infinite;
+}
+
+#search_history {
+  border: 1px solid gray;
+  padding-top: 5px;
+  width: 50%;
+  text-align: center;
+}
+
+#search_history p {
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.history-link {
+  text-decoration: none;
+  color: black;
+}
+
+.history-link:hover {
+  color: pink;
+}
+
+.history-item {
+  border-top: 1px solid gray;
+
+  padding: 5px;
+  width: inherit;
+}
