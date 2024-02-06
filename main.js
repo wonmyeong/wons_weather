@@ -30,7 +30,7 @@ const getNowLocation = (position) => {
     lat = position.coords.latitude;
     lon = position.coords.longitude;
 
-    window.initMap();
+    initMap();
     getWeatherInfo();
   });
 };
@@ -149,11 +149,12 @@ const render = () => {
 
   weatherInfo.innerHTML = cityHTML;
 };
-
-window.initMap = function () {
+let map;
+async function initMap() {
   lat = parseFloat(lat);
   lon = parseFloat(lon);
-  const map = new google.maps.Map(document.getElementById("map"), {
+  const { Map } = await google.maps.importLibrary("maps");
+  map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: lat, lng: lon },
     zoom: 10,
   });
@@ -167,6 +168,6 @@ window.initMap = function () {
     label: markerLocation.label,
     map,
   });
-};
+}
 
 getNowLocation();
