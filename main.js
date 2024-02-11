@@ -16,6 +16,7 @@ let locationSearchInput = document.getElementById("location__searchInput");
 const searchHistory = document.getElementById("search_history__list");
 const itemsPerPage = 5;
 const paginationContainer = document.getElementById("pagination");
+const timeSpace = document.getElementById("time-space");
 
 locationSearchInput.addEventListener("keydown", handleKeyPress);
 function handleKeyPress(event) {
@@ -53,7 +54,6 @@ const getGeolocationUrl = new URL(
 //검색 지역 날씨 정보
 const getGeolocation = async (city) => {
   try {
-    console.log(city);
     getGeolocationUrl.searchParams.set("q", city);
     let response = await fetch(getGeolocationUrl);
     let data = await response.json();
@@ -78,6 +78,10 @@ const humanReadableTimeKorea = (time) => {
   return timeInKr;
 };
 
+const date = new Date();
+const localTime = `현재 시각 : ${date.getHours()}시 ${date.getMinutes()}분`;
+timeSpace.innerHTML = localTime;
+
 const getWeatherInfo = async () => {
   try {
     url.searchParams.set("lat", lat);
@@ -93,6 +97,7 @@ const getWeatherInfo = async () => {
     sunset = humanReadableTimeKorea(data.sys.sunset);
 
     historyRender(pageNumber);
+
     render();
   } catch (error) {
     errorRender(error);
@@ -109,13 +114,18 @@ const historyRender = (pageNumber) => {
   let historyHTML = pageItems
     .map(
       (item) =>
-        ` <li class='history-item'><a class="history-link" onclick=getGeolocation(event.target.textContent)>${item}</a></li>`
+        ` <li class='history-item'><a class="history-link" onclick=getGeolocation(event.target.textContent)>${item}</a>
+        <i class="fa-solid fa-trash" onclick='deleteSearchHistory(event)'></i></li>`
     )
     .join("");
 
   searchHistory.innerHTML = historyHTML;
 
   updatePagination();
+};
+
+const deleteSearchHistory = (event) => {
+  console.log(event.target.previousElementSibling);
 };
 
 function updatePagination() {
@@ -132,7 +142,7 @@ function updatePagination() {
 }
 const errorRender = (error) => {
   weatherInfo.innerHTML = `<div class="alert alert-danger" role="alert">
-  ${error.message}
+  검색하신 위치를 찾을 수 없습니다!!
 </div>`;
 };
 
@@ -142,8 +152,8 @@ const render = () => {
   <div>지역: ${city}</div>
   <div>현재온도 :  ${temp}</div>
   <div>날씨 :  ${currentWeather}</div>
-  <div>현재 최고 온도 : "${tempMax} 현재 최저 온도 : ${tempMin}</div>
-  <div>일출 시간 : " ${sunrise}  </div> 
+  <div>현재 최고 온도 : ${tempMax} 현재 최저 온도 : ${tempMin}</div>
+  <div>일출 시간 : ${sunrise}  </div> 
   <div>일몰 시간 :  ${sunset}</div></div>
   `;
 
