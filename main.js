@@ -40,6 +40,7 @@ const getLocation = () => {
   try {
     city = locationSearchInput.value;
     getGeolocation(city);
+
     locationSearchInput.value = null;
   } catch (err) {
     console.log(err);
@@ -115,7 +116,7 @@ const historyRender = (pageNumber) => {
     .map(
       (item) =>
         ` <li class='history-item'><a class="history-link" onclick=getGeolocation(event.target.textContent)>${item}</a>
-        <i class="fa-solid fa-trash" onclick='deleteSearchHistory(event)'></i></li>`
+        <i class="fa-solid fa-trash" onclick=deleteList(searchHistoryList,event)></i></li>`
     )
     .join("");
 
@@ -124,9 +125,21 @@ const historyRender = (pageNumber) => {
   updatePagination();
 };
 
-const deleteSearchHistory = (event) => {
-  console.log(event.target.previousElementSibling);
+const deleteList = (searchHistoryList, event) => {
+  city = event.target.previousElementSibling.textContent;
+  for (let i = 0; i < searchHistoryList.length; i++) {
+    if (city == searchHistoryList[i]) {
+      const index = searchHistoryList.indexOf(searchHistoryList[i]);
+      if (index > -1) {
+        // only splice array when item is found
+        searchHistoryList.splice(index, 1); // 2nd parameter means remove one item only
+      }
+    }
+  }
+  historyRender(pageNumber);
+  updatePagination();
 };
+//getGeolocation(event.target.previousElementSibling.textContent)
 
 function updatePagination() {
   let pageItem = [];

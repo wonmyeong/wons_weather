@@ -1,0 +1,2 @@
+//setHistoryList를 만든 후
+mode 변수를 활용해서 해당 value를 delete 해준다.
